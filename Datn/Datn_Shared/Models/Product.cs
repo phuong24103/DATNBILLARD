@@ -38,18 +38,19 @@ namespace Datn_Shared.Models
         public DateTime CreateDate { get; set; }
         [Required]
         public string Producer { get; set; }
+        [Required]
         public int Status { get; set; }
         public string Description { get; set; }
         
         public virtual Material Material { get; set; }
-        public  virtual Ren Ren { get; set; }
+        public virtual Ren Ren { get; set; }
         public virtual Handle Handle { get; set; }
         public virtual Top Top { get; set; }
         public virtual Gripe Gripe { get; set; }
-        public virtual ICollection <WishList> WishList { get; set; }
-        public virtual ICollection <CartDetail> cartDetails { get; set; }
-        public virtual ICollection<BillDetail> billDetails { get; set; }
-        public virtual ICollection<CategoryDetail> categoryDetails { get; set; }
+        public virtual ICollection <WishList> WishLists { get; set; }
+        public virtual ICollection <CartDetail> CartDetails { get; set; }
+        public virtual ICollection<BillDetail> BillDetails { get; set; }
+        public virtual ICollection<CategoryDetail> CategoryDetails { get; set; }
 
 
     }

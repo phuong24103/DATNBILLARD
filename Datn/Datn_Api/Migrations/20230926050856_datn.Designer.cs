@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datn_Api.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230925153722_datn")]
+    [Migration("20230926050856_datn")]
     partial class datn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,17 +40,14 @@ namespace Datn_Api.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("PaymentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("VoucherId")
                         .HasColumnType("uniqueidentifier");
@@ -59,9 +56,9 @@ namespace Datn_Api.Migrations
 
                     b.HasIndex("BillStatusId");
 
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("PaymentId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VoucherId");
 
@@ -112,14 +109,14 @@ namespace Datn_Api.Migrations
 
             modelBuilder.Entity("Datn_Shared.Models.Cart", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -130,10 +127,7 @@ namespace Datn_Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CartCustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("CartUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
@@ -145,9 +139,12 @@ namespace Datn_Api.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CartCustomerId");
+                    b.HasIndex("CartUserId");
 
                     b.HasIndex("ProductId");
 
@@ -194,113 +191,6 @@ namespace Datn_Api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CategoriesDetail");
-                });
-
-            modelBuilder.Entity("Datn_Shared.Models.Customer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Point")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("RankId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RankId");
-
-                    b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Datn_Shared.Models.Employee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Gripe", b =>
@@ -384,9 +274,6 @@ namespace Datn_Api.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -431,8 +318,6 @@ namespace Datn_Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("GripeId");
 
@@ -493,20 +378,26 @@ namespace Datn_Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Top", b =>
@@ -525,6 +416,96 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tops");
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Point")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RankId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RankId");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Voucher", b =>
@@ -556,7 +537,7 @@ namespace Datn_Api.Migrations
 
             modelBuilder.Entity("Datn_Shared.Models.WishList", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
@@ -565,11 +546,114 @@ namespace Datn_Api.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CustomerId", "ProductId");
+                    b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("WishLists");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Bill", b =>
@@ -580,15 +664,15 @@ namespace Datn_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Datn_Shared.Models.Employee", "Employee")
-                        .WithMany("Bill")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Datn_Shared.Models.Payment", "Payment")
                         .WithMany("Bills")
                         .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Datn_Shared.Models.User", "User")
+                        .WithMany("Bills")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -600,9 +684,9 @@ namespace Datn_Api.Migrations
 
                     b.Navigation("BillStatus");
 
-                    b.Navigation("Employee");
-
                     b.Navigation("Payment");
+
+                    b.Navigation("User");
 
                     b.Navigation("Voucher");
                 });
@@ -616,7 +700,7 @@ namespace Datn_Api.Migrations
                         .IsRequired();
 
                     b.HasOne("Datn_Shared.Models.Product", "Product")
-                        .WithMany("billDetails")
+                        .WithMany("BillDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -628,25 +712,25 @@ namespace Datn_Api.Migrations
 
             modelBuilder.Entity("Datn_Shared.Models.Cart", b =>
                 {
-                    b.HasOne("Datn_Shared.Models.Customer", "Customer")
+                    b.HasOne("Datn_Shared.Models.User", "User")
                         .WithOne("Cart")
-                        .HasForeignKey("Datn_Shared.Models.Cart", "CustomerId")
+                        .HasForeignKey("Datn_Shared.Models.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.CartDetail", b =>
                 {
                     b.HasOne("Datn_Shared.Models.Cart", "Cart")
-                        .WithMany("cartDetails")
-                        .HasForeignKey("CartCustomerId")
+                        .WithMany("CartDetails")
+                        .HasForeignKey("CartUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Datn_Shared.Models.Product", "Product")
-                        .WithMany("cartDetails")
+                        .WithMany("CartDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -659,13 +743,13 @@ namespace Datn_Api.Migrations
             modelBuilder.Entity("Datn_Shared.Models.CategoryDetail", b =>
                 {
                     b.HasOne("Datn_Shared.Models.Category", "Category")
-                        .WithMany("cateDetails")
+                        .WithMany("CategoryDetails")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Datn_Shared.Models.Product", "Product")
-                        .WithMany("categoryDetails")
+                        .WithMany("CategoryDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -675,34 +759,8 @@ namespace Datn_Api.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Datn_Shared.Models.Customer", b =>
-                {
-                    b.HasOne("Datn_Shared.Models.Rank", "Rank")
-                        .WithMany("Customer")
-                        .HasForeignKey("RankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rank");
-                });
-
-            modelBuilder.Entity("Datn_Shared.Models.Employee", b =>
-                {
-                    b.HasOne("Datn_Shared.Models.Role", "Role")
-                        .WithMany("Employees")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("Datn_Shared.Models.Product", b =>
                 {
-                    b.HasOne("Datn_Shared.Models.Customer", null)
-                        .WithMany("Product")
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("Datn_Shared.Models.Gripe", "Gripe")
                         .WithMany("Products")
                         .HasForeignKey("GripeId")
@@ -744,23 +802,85 @@ namespace Datn_Api.Migrations
                     b.Navigation("Top");
                 });
 
-            modelBuilder.Entity("Datn_Shared.Models.WishList", b =>
+            modelBuilder.Entity("Datn_Shared.Models.User", b =>
                 {
-                    b.HasOne("Datn_Shared.Models.Customer", "Customer")
-                        .WithMany("WishList")
-                        .HasForeignKey("CustomerId")
+                    b.HasOne("Datn_Shared.Models.Rank", "Rank")
+                        .WithMany("Users")
+                        .HasForeignKey("RankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Rank");
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.WishList", b =>
+                {
                     b.HasOne("Datn_Shared.Models.Product", "Product")
-                        .WithMany("WishList")
+                        .WithMany("WishLists")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("Datn_Shared.Models.User", "User")
+                        .WithMany("WishLists")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Datn_Shared.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Bill", b =>
@@ -775,27 +895,12 @@ namespace Datn_Api.Migrations
 
             modelBuilder.Entity("Datn_Shared.Models.Cart", b =>
                 {
-                    b.Navigation("cartDetails");
+                    b.Navigation("CartDetails");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Category", b =>
                 {
-                    b.Navigation("cateDetails");
-                });
-
-            modelBuilder.Entity("Datn_Shared.Models.Customer", b =>
-                {
-                    b.Navigation("Cart")
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("WishList");
-                });
-
-            modelBuilder.Entity("Datn_Shared.Models.Employee", b =>
-                {
-                    b.Navigation("Bill");
+                    b.Navigation("CategoryDetails");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Gripe", b =>
@@ -820,18 +925,18 @@ namespace Datn_Api.Migrations
 
             modelBuilder.Entity("Datn_Shared.Models.Product", b =>
                 {
-                    b.Navigation("WishList");
+                    b.Navigation("BillDetails");
 
-                    b.Navigation("billDetails");
+                    b.Navigation("CartDetails");
 
-                    b.Navigation("cartDetails");
+                    b.Navigation("CategoryDetails");
 
-                    b.Navigation("categoryDetails");
+                    b.Navigation("WishLists");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Rank", b =>
                 {
-                    b.Navigation("Customer");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Ren", b =>
@@ -839,14 +944,19 @@ namespace Datn_Api.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Datn_Shared.Models.Role", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
             modelBuilder.Entity("Datn_Shared.Models.Top", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.User", b =>
+                {
+                    b.Navigation("Bills");
+
+                    b.Navigation("Cart")
+                        .IsRequired();
+
+                    b.Navigation("WishLists");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Voucher", b =>

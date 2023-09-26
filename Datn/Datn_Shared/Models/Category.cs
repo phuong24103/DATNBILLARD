@@ -15,6 +15,6 @@ namespace Datn_Shared.Models
         public string Name { get; set; }
         [Required]
         public int Status { get; set; }
-        public virtual ICollection<CategoryDetail> cateDetails { get; set; }    
+        public virtual ICollection<CategoryDetail> CategoryDetails { get; set; }    
     }
 }
