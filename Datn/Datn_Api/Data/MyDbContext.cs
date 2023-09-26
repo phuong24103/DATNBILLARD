@@ -1,9 +1,11 @@
-﻿using Datn_Shared.Models;
+﻿using Datn_Api.Extensions;
+using Datn_Shared.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Datn_Api.Data
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext<User, Role, Guid>
     {
         public MyDbContext(DbContextOptions options) : base(options)
         {
@@ -19,8 +21,7 @@ namespace Datn_Api.Data
         public DbSet<CartDetail> CartDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryDetail> CategoriesDetail { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Gripe> Gripes { get; set; }
         public DbSet<Handle> Handles { get; set; }
         public DbSet<Material> Materials { get; set; }
@@ -36,19 +37,21 @@ namespace Datn_Api.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=PHUONGDEPTRAI;Initial Catalog=DATN;Integrated Security=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=DATN;Integrated Security=True;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WishList>()
-              .HasKey(p => new { p.CustomerId, p.ProductId });
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<Bill>()
+            .HasOne(a => a.UsedVoucher)
+            .WithOne(c => c.Bill)
+            .HasForeignKey<UsedVoucher>(c => c.BillId);
+            modelBuilder.Entity<User>()
             .HasOne(a => a.Cart)
-            .WithOne(c => c.Customer)
-            .HasForeignKey<Cart>(c => c.CustomerId);
-        
-             //modelBuilder.Seed();
+            .WithOne(c => c.User)
+            .HasForeignKey<Cart>(c => c.UserId);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
         }
     }
 }
