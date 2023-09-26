@@ -12,10 +12,12 @@ namespace Datn_Shared.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
+        [RegularExpression(@"\d*[aA-zZ]\d*", ErrorMessage = "The field Name only has input number")]
         public string Name { get; set; }
         [Required]
+        [RegularExpression(@"\d*[0-9]\d*", ErrorMessage = "The field NecessaryPoints only has input number")]
         public int NecessaryPoints {  get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Customer> Customer { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

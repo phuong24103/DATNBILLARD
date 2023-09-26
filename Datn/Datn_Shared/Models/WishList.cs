@@ -12,11 +12,11 @@ namespace Datn_Shared.Models
     {
         [Key]
         public Guid Id {  get; set; }
-        [ForeignKey("CustomerId")]
-        public Guid CustomerId { get; set; }
+        [ForeignKey("UserId")]
+        public Guid UserId { get; set; }
         [ForeignKey("ProductId")]
         public Guid ProductId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual User User { get; set; }
         public virtual Product  Product { get; set; }
     }
 }
