@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datn_Api.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230926050856_datn")]
+    [Migration("20230927142310_datn")]
     partial class datn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,6 @@ namespace Datn_Api.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("VoucherId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BillStatusId");
@@ -60,9 +57,19 @@ namespace Datn_Api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VoucherId");
-
                     b.ToTable("Bills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf3"),
+                            Address = "Bình nguyên vô tận",
+                            BillStatusId = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf5"),
+                            CreateDate = new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4923),
+                            PaymentId = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf6"),
+                            Price = 1000.0,
+                            UserId = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9230")
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.BillDetail", b =>
@@ -90,6 +97,16 @@ namespace Datn_Api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("BillDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8f95d2d6-c3d3-4749-be89-97e220d62e79"),
+                            BillId = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf3"),
+                            Price = 1500.0,
+                            ProductId = new Guid("cc37720a-7e89-463a-9510-1936e6761d8a"),
+                            Quantity = 100
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.BillStatus", b =>
@@ -105,6 +122,18 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BillStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf5"),
+                            Name = "đã thanh toán"
+                        },
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b15"),
+                            Name = "Chưa thanh toán"
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Cart", b =>
@@ -209,6 +238,20 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Gripes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d85"),
+                            Name = " Khảm",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d75"),
+                            Name = "Ngọc",
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Handle", b =>
@@ -227,6 +270,20 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Handles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d83"),
+                            Name = "Họa tiết sành điệu",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d73"),
+                            Name = " bọc da",
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Material", b =>
@@ -245,6 +302,20 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materials");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d81"),
+                            Name = " Carbon",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d71"),
+                            Name = " phủ carbon",
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Payment", b =>
@@ -260,6 +331,56 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf6"),
+                            Name = "Khi nhận hàng"
+                        },
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b16"),
+                            Name = "Online"
+                        });
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Product", b =>
@@ -330,6 +451,65 @@ namespace Datn_Api.Migrations
                     b.HasIndex("TopId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d8a"),
+                            AvailableQuantity = 1000,
+                            CreateDate = new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4761),
+                            Description = "Description",
+                            GripeId = new Guid("cc37720a-7e89-463a-9510-1936e6761d85"),
+                            HandleId = new Guid("cc37720a-7e89-463a-9510-1936e6761d83"),
+                            Image = "gay1.png",
+                            ImportPrice = 1000.0,
+                            MaterialId = new Guid("cc37720a-7e89-463a-9510-1936e6761d81"),
+                            Name = "Gậy bida sành điệu 1",
+                            Price = 1500.0,
+                            Producer = " Lucasi ",
+                            RenId = new Guid("cc37720a-7e89-463a-9510-1936e6761d82"),
+                            Sold = 500,
+                            Status = 0,
+                            TopId = new Guid("cc37720a-7e89-463a-9510-1936e6761d84")
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d8b"),
+                            AvailableQuantity = 1000,
+                            CreateDate = new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4778),
+                            Description = "Description",
+                            GripeId = new Guid("cc37720a-7e89-463a-9510-1936e6761d85"),
+                            HandleId = new Guid("cc37720a-7e89-463a-9510-1936e6761d83"),
+                            Image = "gay2.png",
+                            ImportPrice = 1000.0,
+                            MaterialId = new Guid("cc37720a-7e89-463a-9510-1936e6761d81"),
+                            Name = "Gậy bida sành điệu 2",
+                            Price = 1500.0,
+                            Producer = " Lucasi ",
+                            RenId = new Guid("cc37720a-7e89-463a-9510-1936e6761d82"),
+                            Sold = 500,
+                            Status = 0,
+                            TopId = new Guid("cc37720a-7e89-463a-9510-1936e6761d84")
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d8c"),
+                            AvailableQuantity = 1000,
+                            CreateDate = new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4783),
+                            Description = "Description",
+                            GripeId = new Guid("cc37720a-7e89-463a-9510-1936e6761d75"),
+                            HandleId = new Guid("cc37720a-7e89-463a-9510-1936e6761d73"),
+                            Image = "gay3.png",
+                            ImportPrice = 1000.0,
+                            MaterialId = new Guid("cc37720a-7e89-463a-9510-1936e6761d71"),
+                            Name = "Gậy bida sành điệu 3",
+                            Price = 1500.0,
+                            Producer = " Molinari  ",
+                            RenId = new Guid("cc37720a-7e89-463a-9510-1936e6761d72"),
+                            Sold = 500,
+                            Status = 0,
+                            TopId = new Guid("cc37720a-7e89-463a-9510-1936e6761d74")
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Rank", b =>
@@ -352,6 +532,15 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ranks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"),
+                            Description = "sành điệu ",
+                            Name = "Kim cương",
+                            NecessaryPoints = 10000
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Ren", b =>
@@ -370,6 +559,20 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rens");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d82"),
+                            Name = "carbon",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d72"),
+                            Name = " bronze ",
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Role", b =>
@@ -416,6 +619,35 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d84"),
+                            Name = "Carbon họa tiết sành điệu",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("cc37720a-7e89-463a-9510-1936e6761d74"),
+                            Name = "gỗ phủ carbon",
+                            Status = 0
+                        });
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.UsedVoucher", b =>
+                {
+                    b.Property<Guid>("BillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VoucherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BillId");
+
+                    b.HasIndex("VoucherId");
+
+                    b.ToTable("UsedVoucher");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.User", b =>
@@ -477,9 +709,6 @@ namespace Datn_Api.Migrations
                     b.Property<Guid>("RankId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -506,6 +735,30 @@ namespace Datn_Api.Migrations
                     b.HasIndex("RankId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9230"),
+                            AccessFailedCount = 0,
+                            Address = "Hoa Thanh Quế",
+                            ConcurrencyStamp = "3434838f-6206-46b4-8cfb-c66984f8e76f",
+                            DateOfBirth = new DateTime(2003, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "quynhanhvippro@gmail.com",
+                            EmailConfirmed = true,
+                            Gender = 1,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "QUYNHANHVIPPRO@GMAIL.COM",
+                            NormalizedUserName = "QUYNHANH",
+                            PasswordHash = "Quynhanh@03",
+                            PhoneNumber = "0363636363",
+                            PhoneNumberConfirmed = true,
+                            Point = 10000,
+                            RankId = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"),
+                            Status = 0,
+                            TwoFactorEnabled = false,
+                            UserName = "QuynhAnh"
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Voucher", b =>
@@ -533,22 +786,45 @@ namespace Datn_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vouchers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf4"),
+                            Code = "DEMACIA",
+                            Status = 0,
+                            TimeEnd = new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4944),
+                            TimeStart = new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            Value = 3.0
+                        },
+                        new
+                        {
+                            Id = new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b14"),
+                            Code = "Pitover",
+                            Status = 0,
+                            TimeEnd = new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            TimeStart = new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            Value = 1.0
+                        });
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.WishList", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("WishLists");
                 });
@@ -676,19 +952,11 @@ namespace Datn_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Datn_Shared.Models.Voucher", "Voucher")
-                        .WithMany("Bills")
-                        .HasForeignKey("VoucherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("BillStatus");
 
                     b.Navigation("Payment");
 
                     b.Navigation("User");
-
-                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.BillDetail", b =>
@@ -759,6 +1027,17 @@ namespace Datn_Api.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Datn_Shared.Models.Post", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.User", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Datn_Shared.Models.Product", b =>
                 {
                     b.HasOne("Datn_Shared.Models.Gripe", "Gripe")
@@ -800,6 +1079,25 @@ namespace Datn_Api.Migrations
                     b.Navigation("Ren");
 
                     b.Navigation("Top");
+                });
+
+            modelBuilder.Entity("Datn_Shared.Models.UsedVoucher", b =>
+                {
+                    b.HasOne("Datn_Shared.Models.Bill", "Bill")
+                        .WithOne("UsedVoucher")
+                        .HasForeignKey("Datn_Shared.Models.UsedVoucher", "BillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Datn_Shared.Models.Voucher", "Voucher")
+                        .WithMany("UsedVouchers")
+                        .HasForeignKey("VoucherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bill");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.User", b =>
@@ -886,6 +1184,9 @@ namespace Datn_Api.Migrations
             modelBuilder.Entity("Datn_Shared.Models.Bill", b =>
                 {
                     b.Navigation("BillDetails");
+
+                    b.Navigation("UsedVoucher")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.BillStatus", b =>
@@ -956,12 +1257,14 @@ namespace Datn_Api.Migrations
                     b.Navigation("Cart")
                         .IsRequired();
 
+                    b.Navigation("Posts");
+
                     b.Navigation("WishLists");
                 });
 
             modelBuilder.Entity("Datn_Shared.Models.Voucher", b =>
                 {
-                    b.Navigation("Bills");
+                    b.Navigation("UsedVouchers");
                 });
 #pragma warning restore 612, 618
         }

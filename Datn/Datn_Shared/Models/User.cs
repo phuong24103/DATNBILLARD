@@ -13,8 +13,6 @@ namespace Datn_Shared.Models
     {
         [Key]
         public Guid Id { get; set; }
-        [ForeignKey("RoleId")]
-        public Guid RoleId { get; set; }
         [ForeignKey("RankId")]
         public Guid RankId { get; set; }
         public int Gender { get; set; }
@@ -24,6 +22,7 @@ namespace Datn_Shared.Models
         public int Status{ get; set;}
         public virtual Rank Rank { get; set;}
         public virtual Cart Cart { get; set;}
+        public virtual ICollection< Post> Posts { get; set;}
         public virtual ICollection<WishList> WishLists { get; set;}
         public virtual ICollection<Bill> Bills { get; set;}
     }

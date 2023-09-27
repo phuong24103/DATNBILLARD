@@ -1,4 +1,5 @@
-﻿using Datn_Shared.Models;
+﻿using Datn_Api.Extensions;
+using Datn_Shared.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,14 +42,16 @@ namespace Datn_Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WishList>()
-              .HasKey(p => new { p.UserId, p.ProductId });
+            modelBuilder.Entity<Bill>()
+            .HasOne(a => a.UsedVoucher)
+            .WithOne(c => c.Bill)
+            .HasForeignKey<UsedVoucher>(c => c.BillId);
             modelBuilder.Entity<User>()
             .HasOne(a => a.Cart)
             .WithOne(c => c.User)
             .HasForeignKey<Cart>(c => c.UserId);
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
         }
     }
 }

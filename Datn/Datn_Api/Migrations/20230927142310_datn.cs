@@ -181,7 +181,6 @@ namespace Datn_Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RankId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -361,7 +360,6 @@ namespace Datn_Api.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VoucherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BillStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -389,12 +387,6 @@ namespace Datn_Api.Migrations
                         principalTable: "Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bills_Vouchers_VoucherId",
-                        column: x => x.VoucherId,
-                        principalTable: "Vouchers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -409,6 +401,30 @@ namespace Datn_Api.Migrations
                     table.PrimaryKey("PK_Carts", x => x.UserId);
                     table.ForeignKey(
                         name: "FK_Carts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -445,13 +461,13 @@ namespace Datn_Api.Migrations
                 name: "WishLists",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WishLists", x => new { x.UserId, x.ProductId });
+                    table.PrimaryKey("PK_WishLists", x => x.Id);
                     table.ForeignKey(
                         name: "FK_WishLists_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -494,6 +510,30 @@ namespace Datn_Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UsedVoucher",
+                columns: table => new
+                {
+                    BillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VoucherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsedVoucher", x => x.BillId);
+                    table.ForeignKey(
+                        name: "FK_UsedVoucher_Bills_BillId",
+                        column: x => x.BillId,
+                        principalTable: "Bills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsedVoucher_Vouchers_VoucherId",
+                        column: x => x.VoucherId,
+                        principalTable: "Vouchers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartDetails",
                 columns: table => new
                 {
@@ -520,6 +560,108 @@ namespace Datn_Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "BillStatuses",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b15"), "Chưa thanh toán" },
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf5"), "đã thanh toán" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Gripes",
+                columns: new[] { "Id", "Name", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d75"), "Ngọc", 0 },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d85"), " Khảm", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Handles",
+                columns: new[] { "Id", "Name", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d73"), " bọc da", 0 },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d83"), "Họa tiết sành điệu", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Materials",
+                columns: new[] { "Id", "Name", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d71"), " phủ carbon", 0 },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d81"), " Carbon", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Payments",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b16"), "Online" },
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf6"), "Khi nhận hàng" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ranks",
+                columns: new[] { "Id", "Description", "Name", "NecessaryPoints" },
+                values: new object[] { new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"), "sành điệu ", "Kim cương", 10000 });
+
+            migrationBuilder.InsertData(
+                table: "Rens",
+                columns: new[] { "Id", "Name", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d72"), " bronze ", 0 },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d82"), "carbon", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tops",
+                columns: new[] { "Id", "Name", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d74"), "gỗ phủ carbon", 0 },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d84"), "Carbon họa tiết sành điệu", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Vouchers",
+                columns: new[] { "Id", "Code", "Status", "TimeEnd", "TimeStart", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492b14"), "Pitover", 0, new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local), 1.0 },
+                    { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf4"), "DEMACIA", 0, new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4944), new DateTime(2023, 9, 27, 0, 0, 0, 0, DateTimeKind.Local), 3.0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "Gender", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Point", "RankId", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9230"), 0, "Hoa Thanh Quế", "3434838f-6206-46b4-8cfb-c66984f8e76f", new DateTime(2003, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "quynhanhvippro@gmail.com", true, 1, false, null, "QUYNHANHVIPPRO@GMAIL.COM", "QUYNHANH", "Quynhanh@03", "0363636363", true, 10000, new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"), null, 0, false, "QuynhAnh" });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "AvailableQuantity", "CreateDate", "Description", "GripeId", "HandleId", "Image", "ImportPrice", "MaterialId", "Name", "Price", "Producer", "RenId", "Sold", "Status", "TopId" },
+                values: new object[,]
+                {
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d8a"), 1000, new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4761), "Description", new Guid("cc37720a-7e89-463a-9510-1936e6761d85"), new Guid("cc37720a-7e89-463a-9510-1936e6761d83"), "gay1.png", 1000.0, new Guid("cc37720a-7e89-463a-9510-1936e6761d81"), "Gậy bida sành điệu 1", 1500.0, " Lucasi ", new Guid("cc37720a-7e89-463a-9510-1936e6761d82"), 500, 0, new Guid("cc37720a-7e89-463a-9510-1936e6761d84") },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d8b"), 1000, new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4778), "Description", new Guid("cc37720a-7e89-463a-9510-1936e6761d85"), new Guid("cc37720a-7e89-463a-9510-1936e6761d83"), "gay2.png", 1000.0, new Guid("cc37720a-7e89-463a-9510-1936e6761d81"), "Gậy bida sành điệu 2", 1500.0, " Lucasi ", new Guid("cc37720a-7e89-463a-9510-1936e6761d82"), 500, 0, new Guid("cc37720a-7e89-463a-9510-1936e6761d84") },
+                    { new Guid("cc37720a-7e89-463a-9510-1936e6761d8c"), 1000, new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4783), "Description", new Guid("cc37720a-7e89-463a-9510-1936e6761d75"), new Guid("cc37720a-7e89-463a-9510-1936e6761d73"), "gay3.png", 1000.0, new Guid("cc37720a-7e89-463a-9510-1936e6761d71"), "Gậy bida sành điệu 3", 1500.0, " Molinari  ", new Guid("cc37720a-7e89-463a-9510-1936e6761d72"), 500, 0, new Guid("cc37720a-7e89-463a-9510-1936e6761d74") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Bills",
+                columns: new[] { "Id", "Address", "BillStatusId", "CreateDate", "PaymentId", "Price", "UserId" },
+                values: new object[] { new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf3"), "Bình nguyên vô tận", new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf5"), new DateTime(2023, 9, 27, 21, 23, 9, 845, DateTimeKind.Local).AddTicks(4923), new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf6"), 1000.0, new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9230") });
+
+            migrationBuilder.InsertData(
+                table: "BillDetails",
+                columns: new[] { "Id", "BillId", "Price", "ProductId", "Quantity" },
+                values: new object[] { new Guid("8f95d2d6-c3d3-4749-be89-97e220d62e79"), new Guid("a51f7c3c-a8e7-4c0a-aeea-b6fc70492bf3"), 1500.0, new Guid("cc37720a-7e89-463a-9510-1936e6761d8a"), 100 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -591,11 +733,6 @@ namespace Datn_Api.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_VoucherId",
-                table: "Bills",
-                column: "VoucherId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CartDetails_CartUserId",
                 table: "CartDetails",
                 column: "CartUserId");
@@ -614,6 +751,11 @@ namespace Datn_Api.Migrations
                 name: "IX_CategoriesDetail_ProductId",
                 table: "CategoriesDetail",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_UserId",
+                table: "Post",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_GripeId",
@@ -641,9 +783,19 @@ namespace Datn_Api.Migrations
                 column: "TopId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UsedVoucher_VoucherId",
+                table: "UsedVoucher",
+                column: "VoucherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WishLists_ProductId",
                 table: "WishLists",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishLists_UserId",
+                table: "WishLists",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -673,13 +825,16 @@ namespace Datn_Api.Migrations
                 name: "CategoriesDetail");
 
             migrationBuilder.DropTable(
+                name: "Post");
+
+            migrationBuilder.DropTable(
+                name: "UsedVoucher");
+
+            migrationBuilder.DropTable(
                 name: "WishLists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "Carts");
@@ -688,19 +843,22 @@ namespace Datn_Api.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
+                name: "Bills");
+
+            migrationBuilder.DropTable(
+                name: "Vouchers");
+
+            migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "BillStatuses");
 
             migrationBuilder.DropTable(
                 name: "Payments");
-
-            migrationBuilder.DropTable(
-                name: "Vouchers");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Gripes");

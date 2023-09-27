@@ -21,7 +21,7 @@ namespace Datn_Shared.Models
         public DateTime TimeEnd { get; set; }
         [Required]
         public int Status { get; set; }
-        public virtual ICollection<Bill> Bills { get; set; }
+        public virtual ICollection<UsedVoucher> UsedVouchers { get; set; }
 
     }
 }

@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IServices\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="IServices\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="IServices\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="IServices\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
@@ -20,8 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="IServices\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
