@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Datn_Shared.Models
 {
-    public class Top
+    public class Tip
     {
         [Key]
         public Guid Id { get; set; }

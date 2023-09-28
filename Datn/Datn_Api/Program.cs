@@ -1,4 +1,6 @@
 using Datn_Api.Data;
+using Datn_Api.IServices;
+using Datn_Api.Services;
 using Datn_Shared.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,8 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyCS"));
 });
+
+builder.Services.AddScoped<IPostService, PostService>();
 
 var app = builder.Build();
 
