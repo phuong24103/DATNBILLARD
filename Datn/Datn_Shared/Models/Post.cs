@@ -14,8 +14,8 @@ namespace Datn_Shared.Models
         public Guid Id { get; set; }
         [ForeignKey("UserId")]
         public Guid UserId { get; set; }
-        public string Content { get; set; }
-        public string Title { get; set; }
+        public string Content {  get; set; }
+        public string Title {  get; set; }
         public string Image { get; set; }
         public DateTime CreateDate { get; set; }
         public string Description { get; set; }

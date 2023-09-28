@@ -258,7 +258,6 @@ namespace Datn_Api.Extensions
                 Name = "CW3",
                 Status = 0,
             });
-
             modelBuilder.Entity<Product>().HasData(
                 new Product()
                 {
@@ -295,6 +294,7 @@ namespace Datn_Api.Extensions
                        Image = "gay2.png",
                        CreateDate = new DateTime(2023, 09, 11),
                        Producer = "Lucasi",
+
                        Status = 0,
                        Description = "Description",
                    },
@@ -529,6 +529,5 @@ namespace Datn_Api.Extensions
                 Price = 1450,
             });
         }
-
     }
 }
