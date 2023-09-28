@@ -11,17 +11,11 @@ namespace Datn_Shared.Models
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
         public string Code { get; set; }
-        [Required]
         public double Value { get; set; }
-        [Required]
         public DateTime TimeStart { get; set; }
-        [Required]
         public DateTime TimeEnd { get; set; }
-        [Required]
         public int Status { get; set; }
-        public virtual ICollection<Bill> Bills { get; set; }
-
+        public virtual ICollection<UsedVoucher> UsedVouchers { get; set; }
     }
 }
