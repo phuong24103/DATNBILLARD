@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Datn_Shared.ViewModels.Post
+namespace Datn_Shared.ViewModels.PostViewModels
 {
     public class PostView
     {
@@ -18,6 +18,6 @@ namespace Datn_Shared.ViewModels.Post
         public DateTime CreateDate { get; set; }
         public string Description { get; set; }
         public int Status { get; set; }
-        public User User { get; set; }
+        public User Users { get; set; }
     }
 }
