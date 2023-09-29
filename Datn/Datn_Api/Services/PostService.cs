@@ -1,7 +1,7 @@
 ﻿using Datn_Api.Data;
 using Datn_Api.IServices;
 using Datn_Shared.Models;
-using Datn_Shared.ViewModels.Post;
+using Datn_Shared.ViewModels.PostViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System.Xml.Linq;
@@ -74,7 +74,7 @@ namespace Datn_Api.Services
                      CreateDate = a.CreateDate,
                      Description = a.Description,
                      Status = a.Status,
-                     User = b
+                     Users = b
                  }).ToListAsync();
             return lstPostView;
         }
@@ -96,7 +96,7 @@ namespace Datn_Api.Services
                      CreateDate = a.CreateDate,
                      Description = a.Description,
                      Status = a.Status,
-                     User = b
+                     Users = b
                  }).FirstAsync();
             return lstPostView;
         }
@@ -117,7 +117,7 @@ namespace Datn_Api.Services
                      CreateDate = a.CreateDate,
                      Description = a.Description,
                      Status = a.Status,
-                     User = b
+                     Users = b
                  }).Where(p => p.Title.ToLower().Contains(title.ToLower())).ToListAsync();
             return lstPostView;
         }
