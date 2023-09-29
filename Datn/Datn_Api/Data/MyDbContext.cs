@@ -21,7 +21,6 @@ namespace Datn_Api.Data
         public DbSet<CartDetail> CartDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryDetail> CategoriesDetail { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Gripe> Gripes { get; set; }
         public DbSet<Handle> Handles { get; set; }
         public DbSet<Material> Materials { get; set; }
@@ -29,11 +28,14 @@ namespace Datn_Api.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Ren> Rens { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet <Role> Roles { get; set; }
-        public DbSet<Top> Tops { get; set; }
+        public DbSet <UserRole> UserRoles { get; set; }
+        public DbSet<Tip> Tips { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<UsedVoucher> UsedVouchers { get; set; }
         public DbSet<WishList> WishLists { get; set; }
-
+        public DbSet<Post> Posts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

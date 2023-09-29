@@ -18,8 +18,8 @@ namespace Datn_Shared.Models
         public Guid RenId { get; set; }
         [ForeignKey("HandleId")]
         public Guid HandleId { get; set; }
-        [ForeignKey("TopId")]
-        public Guid TopId { get; set; }
+        [ForeignKey("TipId")]
+        public Guid TipId { get; set; }
         [ForeignKey("GripeId")]
         public Guid GripeId { get; set; }
         [Required]
@@ -45,7 +45,7 @@ namespace Datn_Shared.Models
         public virtual Material Material { get; set; }
         public virtual Ren Ren { get; set; }
         public virtual Handle Handle { get; set; }
-        public virtual Top Top { get; set; }
+        public virtual Tip Tip { get; set; }
         public virtual Gripe Gripe { get; set; }
         public virtual ICollection <WishList> WishLists { get; set; }
         public virtual ICollection <CartDetail> CartDetails { get; set; }
