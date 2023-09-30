@@ -43,9 +43,12 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 });
 
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IUserservice, UserService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IRankService, RankService>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
