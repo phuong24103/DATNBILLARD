@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datn_Api.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230928192119_datn")]
+    [Migration("20231002163916_datn")]
     partial class datn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -862,14 +862,14 @@ namespace Datn_Api.Migrations
                         new
                         {
                             Id = new Guid("b108d866-eb13-46e3-b3d2-ecae4fbfe872"),
-                            ConcurrencyStamp = "e94a71a5-dbd6-4771-860c-3cd9e00ebe3f",
+                            ConcurrencyStamp = "4d18a00a-63c4-4db6-bd9f-5309e362bbc7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("b108d866-eb13-46e3-b3d2-ecae4fbfe873"),
-                            ConcurrencyStamp = "a39a4a10-ed22-4fc4-9c02-cee3d9e66c38",
+                            ConcurrencyStamp = "8e245ace-1fd1-48f7-a15f-a64e12dc2f99",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -988,9 +988,6 @@ namespace Datn_Api.Migrations
                     b.Property<Guid>("RankId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -1024,7 +1021,7 @@ namespace Datn_Api.Migrations
                             Id = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9231"),
                             AccessFailedCount = 0,
                             Address = "Hoa Thanh Quế",
-                            ConcurrencyStamp = "250a6f06-f531-4edb-98a9-f277a195eb31",
+                            ConcurrencyStamp = "5949c356-c586-41db-b5a7-536d60f85ba9",
                             DateOfBirth = new DateTime(2003, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanhtung@gmail.com",
                             EmailConfirmed = false,
@@ -1035,7 +1032,6 @@ namespace Datn_Api.Migrations
                             PhoneNumberConfirmed = false,
                             Point = 12000,
                             RankId = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"),
-                            RoleId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Status = 0,
                             TwoFactorEnabled = false,
                             UserName = "ThanhTung"
@@ -1045,7 +1041,7 @@ namespace Datn_Api.Migrations
                             Id = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9230"),
                             AccessFailedCount = 0,
                             Address = "Hoa Thanh Quế",
-                            ConcurrencyStamp = "db7d0357-d2ab-448a-80d6-2b474cba7179",
+                            ConcurrencyStamp = "566a6001-027c-4597-a41a-f86bb308874e",
                             DateOfBirth = new DateTime(2003, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "quynhanhvippro@gmail.com",
                             EmailConfirmed = false,
@@ -1056,7 +1052,6 @@ namespace Datn_Api.Migrations
                             PhoneNumberConfirmed = false,
                             Point = 12000,
                             RankId = new Guid("a77f8ae9-af3d-4288-bbf3-8f77776f9236"),
-                            RoleId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Status = 0,
                             TwoFactorEnabled = false,
                             UserName = "QuynhAnh"
@@ -1357,7 +1352,7 @@ namespace Datn_Api.Migrations
             modelBuilder.Entity("Datn_Shared.Models.Post", b =>
                 {
                     b.HasOne("Datn_Shared.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1583,6 +1578,8 @@ namespace Datn_Api.Migrations
 
                     b.Navigation("Cart")
                         .IsRequired();
+
+                    b.Navigation("Posts");
 
                     b.Navigation("WishLists");
                 });
