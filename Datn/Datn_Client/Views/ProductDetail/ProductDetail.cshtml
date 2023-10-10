@@ -1,0 +1,402 @@
+﻿@{
+    ViewData["Title"] = "ProductDetail";
+    <link rel="stylesheet" href="~/css/product.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/productbutton.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dropdown.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/boder.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/imagedetail.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/quantity.css" asp-append-version="true" />
+    <script src="~/js/imagedetail.js"></script>
+    <link rel="stylesheet" href="~/css/plusminus.css" asp-append-version="true" />
+}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ <span class="sr-only">/</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="AllProductController">Danh Mục <span class="sr-only">/</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="AllProductController">Tất Cả Sản Phẩm <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="AllProductController">Chi tiết sản phẩm : (Tên sản phẩm)<span class="sr-only"></span></a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<div class="row" style="margin-top : 30px;border-top : 2px solid black;border-left : 2px solid black;border-right : 2px solid black">
+    <div class="col-md-6">
+        <h3 style="font-weight : bold">Tất Cả Sản Phẩm</h3>
+    </div>
+    <div class="col-md-6" style="text-align : right">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-layer-backward" viewBox="0 0 30 30">
+            <path d="M8.354 15.854a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708l1-1a.5.5 0 0 1 .708 0l.646.647V4H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9v7.793l.646-.647a.5.5 0 0 1 .708 0l1 1a.5.5 0 0 1 0 .708l-3 3z" />
+            <path d="M1 9a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4.5a.5.5 0 0 1 0 1H1v2h4.5a.5.5 0 0 1 0 1H1zm9.5 0a.5.5 0 0 1 0-1H15V6h-4.5a.5.5 0 0 1 0-1H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4.5z" />
+        </svg>
+        <select>
+
+            <option selected value="0">Sắp Xếp</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+
+        </select>
+    </div>
+</div>
+<div class="row" style="margin-top : 30px;border-bottom : 2px solid black;border-left : 2px solid black;border-right : 2px solid black">
+    <div class="col-md-3">
+        <h3 style="font-weight : bold;margin-bottom : 70px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 20 20">
+                <path d="M3 0h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3zm0 8h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3z" />
+            </svg>Bộ Lọc
+        </h3>
+    </div>
+    <div class="col-md-3" style="text-align : right">
+
+        <select>
+
+            <option selected value="0">Thương Hiệu</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+
+        </select>
+    </div>
+    <div class="col-md-3" style="text-align : right">
+
+        <select>
+
+            <option selected value="0">Giá</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+
+        </select>
+    </div>
+    <div class="col-md-3" style="text-align : right">
+
+        <select>
+
+            <option selected value="0">Loại Sản Phẩm</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+
+        </select>
+    </div>
+
+
+</div>
+<div class="row" style="margin-top : 100px;margin-bottom : 100px;border: 2px solid #006100;border-radius: 10px;">
+    <div class="col-md-6">
+        <section>
+            <div class="container" style = "border-right: 2px solid #006100;border-radius: 10px;border-bottom: 2px solid #006100;border-radius: 10px">
+                <div class="carousel">
+                    <input type="radio" name="slides" checked="checked" id="slide-1">
+                    <input type="radio" name="slides" id="slide-2">
+                    <input type="radio" name="slides" id="slide-3">
+                    <input type="radio" name="slides" id="slide-4">
+                    <input type="radio" name="slides" id="slide-5">
+                    <input type="radio" name="slides" id="slide-6">
+                    <ul class="carousel__slides">
+                        <li class="carousel__slide">
+                            <figure>
+                                <div>
+                                    <img src="~/images/1.png" alt="">
+                                </div>
+
+                            </figure>
+                        </li>
+                        <li class="carousel__slide">
+                            <figure>
+                                <div>
+                                    <img src="~/images/2.png" alt="">
+                                </div>
+
+                            </figure>
+                        </li>
+                        <li class="carousel__slide">
+                            <figure>
+                                <div>
+                                    <img src="~/images/3.png" alt="">
+                                </div>
+
+                            </figure>
+                        </li>
+                        <li class="carousel__slide">
+                            <figure>
+                                <div>
+                                    <img src="~/images/4.png" alt="">
+                                </div>
+
+                            </figure>
+                        </li>
+                        <li class="carousel__slide">
+                            <figure>
+                                <div>
+                                    <img src="~/images/5.png" alt="">
+                                </div>
+
+                            </figure>
+                        </li>
+
+                    </ul>
+                    <ul class="carousel__thumbnails">
+                        <li>
+                            <label for="slide-1"><img src="~/images/1.png" alt="" style="width : 100px;height : 100px"></label>
+                        </li>
+                        <li>
+                            <label for="slide-2"><img src="~/images/2.png" alt="" style="width : 100px;height : 100px"></label>
+                        </li>
+                        <li>
+                            <label for="slide-3"><img src="~/images/3.png" alt="" style="width : 100px;height : 100px"></label>
+                        </li>
+                        <li>
+                            <label for="slide-4"><img src="~/images/4.png" alt="" style="width : 100px;height : 100px"></label>
+                        </li>
+                        <li>
+                            <label for="slide-5"><img src="~/images/5.png" alt="" style="width : 100px;height : 100px"></label>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <h3 style = "font-weight : bold;margin-top : 60px">
+            Description
+        </h3>
+        <h6>
+            Để description ở đây
+        </h6>
+    </div>
+    <div class="col-md-6" style="text-align : left">
+        <h3 style="font-weight : bold">
+            Tên Sản Phẩm
+        </h3>
+        <h3 style="font-weight : bold">
+            Giá : <b style="color : red">1 tỉ đồng</b>
+        </h3>
+        <div style="margin-bottom : 30px;margin-top : 30px">
+            <b>Chọn các phụ kiện Custom</b>
+        </div>
+        <select style="margin-bottom : 30px">
+            <option selected value="0">Tip</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+        </select>
+
+        <select style="margin-bottom : 30px">
+            <option selected value="0">Shaft</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+
+        </select>
+        <select style="margin-bottom : 30px">
+
+            <option selected value="0">Weight</option>
+            <option value="1">Giá : Tăng Dần</option>
+            <option value="2">Giá : Giảm Dần</option>
+            <option value="3">Tên A-Z</option>
+            <option value="4">Tên Z-A</option>
+            <option value="5">Cũ Nhất</option>
+            <option value="6">Mới Nhất</option>
+            <option value="7">Bán Chạy Nhất</option>
+        </select>
+        <div class="row">
+            <div class="col-md-3">
+                <div style = "border : solid black 1px;text-align : center">
+                <p>Số lượng: <span id="quantity">0</span></p>
+
+                <button onclick="giamSoLuong()">-</button>
+                <button onclick="tangSoLuong()">+</button>
+
+                <script>
+                    var soLuong = 0; // Khởi tạo số lượng ban đầu
+
+                    function capNhatSoLuong() {
+                        var spanSoLuong = document.getElementById("quantity");
+                        spanSoLuong.textContent = soLuong;
+                    }
+
+                    function tangSoLuong() {
+                        soLuong++;
+                        capNhatSoLuong();
+                    }
+
+                    function giamSoLuong() {
+                        if (soLuong > 0) {
+                            soLuong--;
+                            capNhatSoLuong();
+                        }
+                    }
+
+                    // Gọi hàm để hiển thị số lượng ban đầu
+                    capNhatSoLuong();
+                </script>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <button type="button" class="btn btn-danger">Thêm Vào Giỏ Hàng</button>
+            </div>
+        </div>
+        <div style = "color : darkorange;margin-top : 30px;">
+            <h4>Trạng Thái</h4>
+        </div>
+        <div>
+            <h6 style = "font-weight : bold">(Mã Giảm Giá)</h6><h8>Details mã giảm giá</h8>
+        </div>
+        <div>
+            <h6 style = "font-weight : bold">(Mã Giảm Giá)</h6><h8>Details mã giảm giá</h8>
+        </div>
+        <div>
+            <h6 style = "font-weight : bold">(Mã Giảm Giá)</h6><h8>Details mã giảm giá</h8>
+        </div>
+    </div>
+</div>
+<div style="text-align : center;margin-top : 30px;margin-bottom : 30px;font-weight : bold">
+    <h1>Sản Phẩm Tương Tự</h1>
+</div>
+<div class="row" style="margin-bottom : 100px;margin-top : 100px">
+
+    <div class="col-md-4" style="border: 2px solid #006100;border-radius: 10px;">
+        <a asp-area="" asp-controller="ProductDetail" asp-action="ProductDetail">
+            <div class="container page-wrapper">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="el-wrapper">
+                            <div class="box-up">
+                                <img class="img" src="~/images//testproduct.png" alt="">
+                                <div class="img-info">
+                                    <div class="info-inner">
+                                        <span class="p-name">Tên</span>
+                                        <span class="p-company">Hãng</span>
+                                    </div>
+                                    <div class="a-size">Số lượng : <span class="size">Số lượng</span></div>
+                                </div>
+                            </div>
+
+                            <div class="box-down">
+                                <div class="h-bg">
+                                    <div class="h-bg-inner"></div>
+                                </div>
+
+                                <a class="cart" href="#">
+                                    <span class="price">$120</span>
+                                    <span class="add-to-cart">
+                                        <span class="txt">Thêm vào giỏ hàng</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4" style="border: 2px solid #006100;border-radius: 10px;">
+        <a asp-area="" asp-controller="ProductDetail" asp-action="ProductDetail">
+            <div class="container page-wrapper">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="el-wrapper">
+                            <div class="box-up">
+                                <img class="img" src="~/images//1.png" alt="">
+                                <div class="img-info">
+                                    <div class="info-inner">
+                                        <span class="p-name">Tên</span>
+                                        <span class="p-company">Hãng</span>
+                                    </div>
+                                    <div class="a-size">Số lượng : <span class="size">Số lượng</span></div>
+                                </div>
+                            </div>
+
+                            <div class="box-down">
+                                <div class="h-bg">
+                                    <div class="h-bg-inner"></div>
+                                </div>
+
+                                <a class="cart" href="#">
+                                    <span class="price">$120</span>
+                                    <span class="add-to-cart">
+                                        <span class="txt">Thêm vào giỏ hàng</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4" style="border: 2px solid #006100;border-radius: 10px;">
+        <a asp-area="" asp-controller="ProductDetail" asp-action="ProductDetail">
+            <div class="container page-wrapper">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="el-wrapper">
+                            <div class="box-up">
+                                <img class="img" src="~/images//1.png" alt="">
+                                <div class="img-info">
+                                    <div class="info-inner">
+                                        <span class="p-name">Tên</span>
+                                        <span class="p-company">Hãng</span>
+                                    </div>
+                                    <div class="a-size">Số lượng : <span class="size">Số lượng</span></div>
+                                </div>
+                            </div>
+
+                            <div class="box-down">
+                                <div class="h-bg">
+                                    <div class="h-bg-inner"></div>
+                                </div>
+
+                                <a class="cart" href="#">
+                                    <span class="price">$120</span>
+                                    <span class="add-to-cart">
+                                        <span class="txt">Thêm vào giỏ hàng</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
